@@ -1,0 +1,7 @@
+Stappen:
+Maak een 'Zoek'-knop op de pagina en koppel deze aan een functie die de gegevens over België ophaalt en dit in de console logt. Tip: Als de de documentatie bekijkt en op async zoekt, vindt je een voorbeeld van een GET-request.
+
+1. Maak een knop in de html
+    2. Sla de referentie naar de html knop op in je Javascript
+2. Zet een event-listener (click) op de knop en verwijs naar de functie
+3. declareer de functie

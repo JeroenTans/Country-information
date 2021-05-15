@@ -1,0 +1,13 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+#infoHolder {
+    height: auto;
+}
