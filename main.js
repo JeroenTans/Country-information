@@ -1,8 +1,6 @@
-
-
-const container = document.getElementById('pictureFlag');
-const containerTwo = document.getElementById('countryInfo')
-const containerThree = document.getElementById('errorMessage')
+const mainContainer = document.getElementById('infoHolder');
+const countryInformation = document.createElement('div');
+const errorMessage = document.createElement('div');
 const inputField = document.getElementById('searchCountry');
 const countryFlagg = document.createElement('img');
 countryFlagg.style.width = "400px";
@@ -26,31 +24,38 @@ function whatLanguage (languages) {
 
 function countryInfo (flagOfCountry, nameOfCountry, region, amountOfPeople, capital, currencies, languages) {
 
-    container.appendChild(countryFlagg);
+    mainContainer.appendChild(countryFlagg);
+    mainContainer.appendChild(countryInformation)
     countryFlagg.setAttribute('src', flagOfCountry);
 
-    containerTwo.textContent = nameOfCountry + " is situated in " + region + ". It has a population of " + amountOfPeople + " people. The capital is " + capital + " and you can pay with " + whatCurrencies(currencies) + "'s. They speak " + whatLanguage(languages);
+    countryInformation.textContent = nameOfCountry + " is situated in " + region + ". It has a population of " + amountOfPeople + " people. The capital is " + capital + " and you can pay with " + whatCurrencies(currencies) + "'s. They speak " + whatLanguage(languages);
 
     return inputField.value = "";
 }
 
 async function allCode () {
 
-    const result = await axios.get(`https://restcountries.eu/rest/v2/name/${inputField.value}`);
-
     try {
+
+        const result = await axios.get(`https://restcountries.eu/rest/v2/name/${inputField.value}`);
+        errorMessage.remove();
+
         const data = result.data[0];
         const nameOfCountry = data.name;
-        const region = data.subregion
-        const amountOfPeople = data.population
-        const capital = data.capital
+        const region = data.subregion;
+        const amountOfPeople = data.population;
+        const capital = data.capital;
         const currencies = data.currencies;
-        const languages = data.languages
-        const flagOfCountry = data.flag
+        const languages = data.languages;
+        const flagOfCountry = data.flag;
 
         countryInfo(flagOfCountry, nameOfCountry, region, amountOfPeople, capital, currencies, languages)
     } catch (e) {
-        console.log('Kan dit land momenteel niet laden');
+        mainContainer.appendChild(errorMessage);
+        countryFlagg.remove();
+        countryInformation.remove();
+        errorMessage.textContent = 'Kan dit land momenteel niet laden';
+
     }
 }
 
@@ -58,7 +63,7 @@ const searchButton = document.getElementById('searchButton');
 searchButton.addEventListener('click', allCode)
 
 inputField.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') allCode();})
+    if (e.key === 'Enter') allCode()})
 
 
 
